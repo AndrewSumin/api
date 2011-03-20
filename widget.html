@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+    <head>
+        <title>Группа frontend, HeadHunter, март 2011</title>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                font-family:tahoma;
+            }
+        </style>
+        <script type="text/javascript" src="api.js"></script>
+    </head>
+    <body>
+        <div style="float:left; width:500px;">
+            <div id="search"></div>
+            <div>
+                <!--a id="prev" href="javascript:void(0)">назад</a>&#160;-->
+                <a id="next" href="javascript:void(0)">еще</a>
+            </div>
+        </div>
+        <div id="employer" style="float:left; width:500px; margin-left:50px;"></div>
+        <script>
+            (function(){
+                var search = document.getElementById('search');
+                var employer = document.getElementById('employer');
+                var prev = document.getElementById('prev');
+                var next = document.getElementById('next');
+                function drawVacancy(vacancy){
+                     return '<div style="margin-bottom:5px;"><a href="'+ vacancy.link.alternate.href +'">' + vacancy.name + '</a> <small>' + vacancy.region.name + '</small></div>';
+                }
+                function callbackSearch(result){
+                    search.innerHTML += result.vacancies.map(drawVacancy).join('');
+                    next.onclick = function(){
+                        result.pager.next(callbackSearch);
+                        return false;
+                    };
+                }
+                function callbackEmployer(vacancyList){
+                    employer.innerHTML = vacancyList.map(drawVacancy).join('');
+                }
+                hh.vacancies.search({text:'javascript', region:[1, 2]}, callbackSearch);
+                hh.vacancies.employer(1455, callbackEmployer);
+            })();
+        </script>
+    </body>
+</html>
