@@ -123,7 +123,7 @@
      * @name api
      * @namespace Holds functionality.
      */
-    var api = {};
+    var hh = {};
 
     /**
      * @constructor
@@ -186,12 +186,12 @@
      * }
      */
 
-    api.vacancy = function(vacancy){
+    hh.vacancy = function(vacancy){
         var links = {}
         for (var i =0; i < vacancy.link.length; i++){
             links[vacancy.link[i].rel] = vacancy.link[i];
-            if (vacancy.link[i].salary.currency && vacancy.link[i].salary.currency.__text){
-                vacancy.link[i].salary.currency.name = vacancy.link[i].salary.currency__text;
+            if (vacancy.salary && vacancy.salary.currency.__text){
+                vacancy.salary.currency.name = vacancy.salary.currency__text;
             }
         }
         vacancy.link = links;
@@ -202,7 +202,7 @@
      * @namespace Holds search result object.
      * @ignore
      */
-    api.search = {
+    hh.search = {
         /**
          * @private
          */
@@ -210,81 +210,81 @@
             this.found = json.found;
             this.query = query;
             this.query.page = query.page || 0;
-            this.pager = new api.pager(this);
+            this.pager = new hh.pager(this);
         }
     };
 
     /**
      * @constructor
      * @description Search vacancy result object.
-     * @property {Array} vacancies List of {@link api.vacancy}
-     * @property {Object} pager Pager, see {@link api.pager}
-     * @property {Number} found number of {@link api.vacancy}
+     * @property {Array} vacancies List of {@link hh.vacancy}
+     * @property {Object} pager Pager, see {@link hh.pager}
+     * @property {Number} found number of {@link hh.vacancy}
      * @param json JSON response from api
      * @param query Hash of query params
      */
-    api.search.vacancy = function(json, query){
-        this.vacancies = json.vacancies.map(api.vacancy);
+    hh.search.vacancy = function(json, query){
+        this.vacancies = json.vacancies.map(hh.vacancy);
         this.init(json, query);
     };
-    api.search.vacancy.prototype = api.search;
+    hh.search.vacancy.prototype = hh.search;
 
     /**
      * @constructor
-     * @param object result of search {@link api.search.vacancy}
+     * @param object result of search {@link hh.search.vacancy}
      * @property {Number} pages total number of pages
      */
 
-    api.pager = function(vacancySearchResult){
+    hh.pager = function(vacancySearchResult){
         this.page = vacancySearchResult.query.page;
         this.pages = Math.ceil(vacancySearchResult.found / vacancySearchResult.query.items || 20);
 
         /**
          * @description Get previous page of vacancies
-         * @param callback Receives a {@link api.search.vacancy}
+         * @param callback Receives a {@link hh.search.vacancy}
          */
         this.prev = function(callback){
             if (this.page <= 0){
                 return null;
             }
             vacancySearchResult.query.page--;
-            api.vacancies.search(vacancySearchResult.query, callback);
+            hh.vacancies.search(vacancySearchResult.query, callback);
         };
         /**
          * @description Get next page of vacancies
-         * @param callback Receives a {@link api.search.vacancy}
+         * @param callback Receives a {@link hh.search.vacancy}
          */
         this.next = function(callback){
             if (this.page >= this.pages){
                 return null;
             }
             vacancySearchResult.query.page++;
-            api.vacancies.search(vacancySearchResult.query, callback);
+            hh.vacancies.search(vacancySearchResult.query, callback);
         };
         /**
          * @description Get exact page of vacancies
-         * @param callback Receives a {@link api.search.vacancy}
+         * @param callback Receives a {@link hh.search.vacancy}
          */
         this.exact = function(page){
             if (page <= 0 || page >= this.pages){
                 return null;
             }
             vacancySearchResult.query.page = page;
-            api.vacancies.search(vacancySearchResult.query, callback);
+            hh.vacancies.search(vacancySearchResult.query, callback);
         };
     };
 
     /**
      * @namespace Holds vacancies functionality.
      */
-    api.vacancies = {};
+    hh.vacancies = {};
 
     /**
-     * @description Search vacancies by query, callback receive {@link api.search.vacancy}.
+     * @description Search vacancies by query, callback receive {@link hh.search.vacancy}.
      * @param query Hash with query params
-     * @param callback CallBack function, receive {@link api.search.vacancy}
+     * @param callback CallBack function, receive {@link hh.search.vacancy}
      * @example
-     * api.vacancies.employer({text:'javascript', region:[1, 2]},
+     * hh.vacancies.employer({text:'javascript', region:[1, 2]},
      *     function(result){
      *         function alertName (vacancy){
      *             alert (vacancy.name)
@@ -293,19 +293,19 @@
      *     }
      * )
      */
-    api.vacancies.search = function(query, callback) {
+    hh.vacancies.search = function(query, callback) {
         var callbackName = utils.createCallback(function(json){
-            callback(new api.search.vacancy(json, query));
+            callback(new hh.search.vacancy(json, query));
         });
         utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
     };
 
     /**
-     * @description Get employer vacancies, callback receive array of {@link api.vacancy}.
+     * @description Get employer vacancies, callback receive array of {@link hh.vacancy}.
      * @param id Employer id
-     * @param callback CallBack function, receive array of {@link api.vacancy}
+     * @param callback CallBack function, receive array of {@link hh.vacancy}
      * @example
-     * api.vacancies.employer(1455,
+     * hh.vacancies.employer(1455,
      *     function(vacancies){
      *         function alertName (vacancy){
      *             alert (vacancy.name)
@@ -314,12 +314,12 @@
      *     }
      * )
      */
-    api.vacancies.employer = function(id, callback) {
+    hh.vacancies.employer = function(id, callback) {
         var callbackName = utils.createCallback(function(json){
-            callback(json.map(api.vacancy));
+            callback(json.map(hh.vacancy));
         });
         utils.createScript({src: utils.createSrc('/vacancy/employer/' + id + '/', {}, callbackName)});
     };
 
-    window[name] = api;
+    window[name] = hh;
 })('hh');
