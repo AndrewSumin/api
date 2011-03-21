@@ -324,9 +324,9 @@
      * @name hhSearchVacancy
      * @constructor
      * @description Search vacancy result object.
-     * @property {Array} vacancies List of {@link hhVacancyShort}
+     * @property {Array} vacancies List of {@link hhShortVacancy}
      * @property {Object} pager Pager, see {@link hhPager}
-     * @property {Number} found number of {@link hhVacancyShort}
+     * @property {Number} found number of {@link hhShortVacancy}
      * @param json JSON response from api
      * @param query Hash of query params
      */
@@ -386,6 +386,39 @@
     /**
      * @name hh
      * @namespace Holds functionality.
+     * @example
+     * &lt;!DOCTYPE html&gt;
+     * &lt;html lang="ru-RU"&gt;
+     *     &lt;head&gt;
+     *         &lt;title&gt;JS API&lt;/title&gt;
+     *         &lt;script type="text/javascript" src="api.js"&gt;&lt;/script&gt;
+     *     &lt;/head&gt;
+     *     &lt;body&gt;
+     *         &lt;script&gt;
+     *              function drawVacancy(vacancy){
+     *                  return vacancy.name + '\n';
+     *              }
+     *              function callbackSearch(result){
+     *                  alert(result.vacancies.map(drawVacancy).join(''));
+     *              }
+     *              function callbackEmployerVacancies(vacancyList){
+     *                  alert(vacancyList.map(drawVacancy).join(''));
+     *              }
+     *              function callbackEmployer(employer){
+     *                  alert(employer.name);
+     *              }
+     *
+     *              // Get search result
+     *              hh.vacancies.search({text:'javascript', region:[1, 2]}, callbackSearch);
+     *
+     *              // Get employer vacancies
+     *              hh.vacancies.employer(1455, callbackEmployerVacancies);
+     *
+     *              // Get employer info
+     *              hh.employer(1455, callbackEmployer);
+     *         &lt;/script&gt;
+     *     &lt;/body&gt;
+     * &lt;/html&gt;
      */
     var hh = {};
 
@@ -452,9 +485,9 @@
     };
 
     /**
-     * @description Get employer vacancies, callback receive array of {@link hhVacancyShort}.
+     * @description Get employer vacancies, callback receive array of {@link hhShortVacancy}.
      * @param id Employer id
-     * @param callback CallBack function, receive array of {@link hhVacancyShort}
+     * @param callback CallBack function, receive array of {@link hhShortVacancy}
      * @example
      * hh.vacancies.employer(1455,
      *     function(vacancies){

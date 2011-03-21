@@ -331,9 +331,9 @@
 <span class='line'>324</span>      * @name hhSearchVacancy
 <span class='line'>325</span>      * @constructor
 <span class='line'>326</span>      * @description Search vacancy result object.
-<span class='line'>327</span>      * @property {Array} vacancies List of {@link hhVacancyShort}
+<span class='line'>327</span>      * @property {Array} vacancies List of {@link hhShortVacancy}
 <span class='line'>328</span>      * @property {Object} pager Pager, see {@link hhPager}
-<span class='line'>329</span>      * @property {Number} found number of {@link hhVacancyShort}
+<span class='line'>329</span>      * @property {Number} found number of {@link hhShortVacancy}
 <span class='line'>330</span>      * @param json JSON response from api
 <span class='line'>331</span>      * @param query Hash of query params
 <span class='line'>332</span>      */</span><span class="WHIT">
@@ -393,92 +393,125 @@
 <span class='line'>386</span> </span><span class="WHIT">    </span><span class="COMM">/**
 <span class='line'>387</span>      * @name hh
 <span class='line'>388</span>      * @namespace Holds functionality.
-<span class='line'>389</span>      */</span><span class="WHIT">
-<span class='line'>390</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">hh</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>391</span> 
-<span class='line'>392</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>393</span>      * @description Get employer info
-<span class='line'>394</span>      * @param {Number} id Employer id
-<span class='line'>395</span>      * @param {Function} callback
-<span class='line'>396</span>      * @example
-<span class='line'>397</span>      * hh.employer(1455,
-<span class='line'>398</span>      *     function(employer){
-<span class='line'>399</span>      *         alert (employer.name)
-<span class='line'>400</span>      *     }
-<span class='line'>401</span>      * )
-<span class='line'>402</span>      */</span><span class="WHIT">
-<span class='line'>403</span> </span><span class="WHIT">    </span><span class="NAME">hh.employer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>404</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>405</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">newEmployer</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>406</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>407</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/employer/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>408</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>409</span> 
-<span class='line'>410</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>411</span>      * @description Get vacancy info
-<span class='line'>412</span>      * @param {Number} id Vacancy id
-<span class='line'>413</span>      * @param {Function} callback
-<span class='line'>414</span>      * @example
-<span class='line'>415</span>      * hh.vacancy(1,
-<span class='line'>416</span>      *     function(vacancy){
-<span class='line'>417</span>      *         alert (vacancy.name)
-<span class='line'>418</span>      *     }
-<span class='line'>419</span>      * )
-<span class='line'>420</span>      */</span><span class="WHIT">
-<span class='line'>421</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>422</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>423</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">newVacancy</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>424</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>425</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>426</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>427</span> 
-<span class='line'>428</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>429</span>      * @namespace Holds vacancies functionality.
-<span class='line'>430</span>      */</span><span class="WHIT">
-<span class='line'>431</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>432</span> 
-<span class='line'>433</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>434</span>      * @description Search vacancies by query, callback receive {@link hhSearchVacancy}.
-<span class='line'>435</span>      * @param query Hash with query params
-<span class='line'>436</span>      * @param callback CallBack function, receive {@link hhSearchVacancy}
-<span class='line'>437</span>      * @example
-<span class='line'>438</span>      * hh.vacancies.employer({text:'javascript', region:[1, 2]},
-<span class='line'>439</span>      *     function(result){
-<span class='line'>440</span>      *         function alertName (vacancy){
-<span class='line'>441</span>      *             alert (vacancy.name)
-<span class='line'>442</span>      *         }
-<span class='line'>443</span>      *         result.vacancies.forEach(alertName)
-<span class='line'>444</span>      *     }
-<span class='line'>445</span>      * )
-<span class='line'>446</span>      */</span><span class="WHIT">
-<span class='line'>447</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies.search</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">query</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>448</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>449</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">hhSearchVacancy</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">query</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>450</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>451</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/search/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">query</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>452</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>453</span> 
-<span class='line'>454</span> </span><span class="WHIT">    </span><span class="COMM">/**
-<span class='line'>455</span>      * @description Get employer vacancies, callback receive array of {@link hhVacancyShort}.
-<span class='line'>456</span>      * @param id Employer id
-<span class='line'>457</span>      * @param callback CallBack function, receive array of {@link hhVacancyShort}
-<span class='line'>458</span>      * @example
-<span class='line'>459</span>      * hh.vacancies.employer(1455,
-<span class='line'>460</span>      *     function(vacancies){
-<span class='line'>461</span>      *         function alertName (vacancy){
-<span class='line'>462</span>      *             alert (vacancy.name)
-<span class='line'>463</span>      *         }
-<span class='line'>464</span>      *         vacancies.forEach(alertName)
-<span class='line'>465</span>      *     }
-<span class='line'>466</span>      * )
-<span class='line'>467</span>      */</span><span class="WHIT">
-<span class='line'>468</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies.employer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>469</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>470</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">json.map</span><span class="PUNC">(</span><span class="NAME">newShortVacancy</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>471</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>472</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/employer/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>473</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>474</span> 
-<span class='line'>475</span> </span><span class="WHIT">    </span><span class="NAME">window</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">hh</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>476</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="STRN">'hh'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>477</span> </span></pre></body></html>
+<span class='line'>389</span>      * @example
+<span class='line'>390</span>      * &lt;!DOCTYPE html&gt;
+<span class='line'>391</span>      * &lt;html lang="ru-RU"&gt;
+<span class='line'>392</span>      *     &lt;head&gt;
+<span class='line'>393</span>      *         &lt;title&gt;JS API&lt;/title&gt;
+<span class='line'>394</span>      *         &lt;script type="text/javascript" src="api.js"&gt;&lt;/script&gt;
+<span class='line'>395</span>      *     &lt;/head&gt;
+<span class='line'>396</span>      *     &lt;body&gt;
+<span class='line'>397</span>      *         &lt;script&gt;
+<span class='line'>398</span>      *              function drawVacancy(vacancy){
+<span class='line'>399</span>      *                  return vacancy.name + '\n';
+<span class='line'>400</span>      *              }
+<span class='line'>401</span>      *              function callbackSearch(result){
+<span class='line'>402</span>      *                  alert(result.vacancies.map(drawVacancy).join(''));
+<span class='line'>403</span>      *              }
+<span class='line'>404</span>      *              function callbackEmployerVacancies(vacancyList){
+<span class='line'>405</span>      *                  alert(vacancyList.map(drawVacancy).join(''));
+<span class='line'>406</span>      *              }
+<span class='line'>407</span>      *              function callbackEmployer(employer){
+<span class='line'>408</span>      *                  alert(employer.name);
+<span class='line'>409</span>      *              }
+<span class='line'>410</span>      *
+<span class='line'>411</span>      *              // Get search result
+<span class='line'>412</span>      *              hh.vacancies.search({text:'javascript', region:[1, 2]}, callbackSearch);
+<span class='line'>413</span>      *
+<span class='line'>414</span>      *              // Get employer vacancies
+<span class='line'>415</span>      *              hh.vacancies.employer(1455, callbackEmployerVacancies);
+<span class='line'>416</span>      *
+<span class='line'>417</span>      *              // Get employer info
+<span class='line'>418</span>      *              hh.employer(1455, callbackEmployer);
+<span class='line'>419</span>      *         &lt;/script&gt;
+<span class='line'>420</span>      *     &lt;/body&gt;
+<span class='line'>421</span>      * &lt;/html&gt;
+<span class='line'>422</span>      */</span><span class="WHIT">
+<span class='line'>423</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">hh</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>424</span> 
+<span class='line'>425</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>426</span>      * @description Get employer info
+<span class='line'>427</span>      * @param {Number} id Employer id
+<span class='line'>428</span>      * @param {Function} callback
+<span class='line'>429</span>      * @example
+<span class='line'>430</span>      * hh.employer(1455,
+<span class='line'>431</span>      *     function(employer){
+<span class='line'>432</span>      *         alert (employer.name)
+<span class='line'>433</span>      *     }
+<span class='line'>434</span>      * )
+<span class='line'>435</span>      */</span><span class="WHIT">
+<span class='line'>436</span> </span><span class="WHIT">    </span><span class="NAME">hh.employer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>437</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>438</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">newEmployer</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>439</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>440</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/employer/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>441</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>442</span> 
+<span class='line'>443</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>444</span>      * @description Get vacancy info
+<span class='line'>445</span>      * @param {Number} id Vacancy id
+<span class='line'>446</span>      * @param {Function} callback
+<span class='line'>447</span>      * @example
+<span class='line'>448</span>      * hh.vacancy(1,
+<span class='line'>449</span>      *     function(vacancy){
+<span class='line'>450</span>      *         alert (vacancy.name)
+<span class='line'>451</span>      *     }
+<span class='line'>452</span>      * )
+<span class='line'>453</span>      */</span><span class="WHIT">
+<span class='line'>454</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancy</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>455</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>456</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">newVacancy</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>457</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>458</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>459</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>460</span> 
+<span class='line'>461</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>462</span>      * @namespace Holds vacancies functionality.
+<span class='line'>463</span>      */</span><span class="WHIT">
+<span class='line'>464</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>465</span> 
+<span class='line'>466</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>467</span>      * @description Search vacancies by query, callback receive {@link hhSearchVacancy}.
+<span class='line'>468</span>      * @param query Hash with query params
+<span class='line'>469</span>      * @param callback CallBack function, receive {@link hhSearchVacancy}
+<span class='line'>470</span>      * @example
+<span class='line'>471</span>      * hh.vacancies.employer({text:'javascript', region:[1, 2]},
+<span class='line'>472</span>      *     function(result){
+<span class='line'>473</span>      *         function alertName (vacancy){
+<span class='line'>474</span>      *             alert (vacancy.name)
+<span class='line'>475</span>      *         }
+<span class='line'>476</span>      *         result.vacancies.forEach(alertName)
+<span class='line'>477</span>      *     }
+<span class='line'>478</span>      * )
+<span class='line'>479</span>      */</span><span class="WHIT">
+<span class='line'>480</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies.search</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">query</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>481</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>482</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">hhSearchVacancy</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">query</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>483</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>484</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/search/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">query</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>485</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>486</span> 
+<span class='line'>487</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>488</span>      * @description Get employer vacancies, callback receive array of {@link hhShortVacancy}.
+<span class='line'>489</span>      * @param id Employer id
+<span class='line'>490</span>      * @param callback CallBack function, receive array of {@link hhShortVacancy}
+<span class='line'>491</span>      * @example
+<span class='line'>492</span>      * hh.vacancies.employer(1455,
+<span class='line'>493</span>      *     function(vacancies){
+<span class='line'>494</span>      *         function alertName (vacancy){
+<span class='line'>495</span>      *             alert (vacancy.name)
+<span class='line'>496</span>      *         }
+<span class='line'>497</span>      *         vacancies.forEach(alertName)
+<span class='line'>498</span>      *     }
+<span class='line'>499</span>      * )
+<span class='line'>500</span>      */</span><span class="WHIT">
+<span class='line'>501</span> </span><span class="WHIT">    </span><span class="NAME">hh.vacancies.employer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">id</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>502</span> </span><span class="WHIT">        </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">utils.createCallback</span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">json</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>503</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">json.map</span><span class="PUNC">(</span><span class="NAME">newShortVacancy</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>504</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>505</span> </span><span class="WHIT">        </span><span class="NAME">utils.createScript</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">src</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">utils.createSrc</span><span class="PUNC">(</span><span class="STRN">'/vacancy/employer/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">id</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callbackName</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>506</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>507</span> 
+<span class='line'>508</span> </span><span class="WHIT">    </span><span class="NAME">window</span><span class="PUNC">[</span><span class="NAME">name</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">hh</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>509</span> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">(</span><span class="STRN">'hh'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>510</span> </span></pre></body></html>
