@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hh</title>
+		<title>JsDoc Reference - hh.vacancies</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -210,7 +210,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hh
+				Namespace hh.vacancies
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -218,7 +218,7 @@ ul.inheritsList
 				
 				
 			
-				Holds functionality.
+				Holds vacancies functionality.
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/api.js.html">api.js</a>.
@@ -227,7 +227,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hh.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hh.vacancies.">
 				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
@@ -240,7 +240,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hh.html#constructor">hh</a></b>
+								<b><a href="../symbols/hh.vacancies.html#constructor">hh.vacancies</a></b>
 							</div>
 							<div class="description"></div>
 						</td>
@@ -251,17 +251,12 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hh.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hh.vacancies.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -274,9 +269,18 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hh.<b><a href="../symbols/hh.html#.employer">employer</a></b>(id, callback)
+								<div class="fixedFont">hh.vacancies.<b><a href="../symbols/hh.vacancies.html#.employer">employer</a></b>(id, callback)
 								</div>
-								<div class="description">Get Employer info</div>
+								<div class="description">Get employer vacancies, callback receive array of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a>.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">hh.vacancies.<b><a href="../symbols/hh.vacancies.html#.search">search</a></b>(query, callback)
+								</div>
+								<div class="description">Search vacancies by query, callback receive <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a>.</div>
 							</td>
 						</tr>
 					
@@ -297,7 +301,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hh</b>
+						<b>hh.vacancies</b>
 				</div>
 				
 				<div class="description">
@@ -332,20 +336,23 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">hh.</span><b>employer</b>(id, callback)
+					<span class="light">hh.vacancies.</span><b>employer</b>(id, callback)
 					
 					</div>
 					<div class="description">
-						Get Employer info
+						Get employer vacancies, callback receive array of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a>.
 						
 						
 					</div>
 					
 					
 					
-					<pre class="code">hh.employer(1455,
-    function(employer){
-        alert (employer.name)
+					<pre class="code">hh.vacancies.employer(1455,
+    function(vacancies){
+        function alertName (vacancy){
+            alert (vacancy.name)
+        }
+        vacancies.forEach(alertName)
     }
 )</pre>
 					
@@ -356,16 +363,69 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Number}</span> <b>id</b>
+									<b>id</b>
 									
 								</dt>
 								<dd>Employer id</dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
+									<b>callback</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>CallBack function, receive array of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".search"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">hh.vacancies.</span><b>search</b>(query, callback)
+					
+					</div>
+					<div class="description">
+						Search vacancies by query, callback receive <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a>.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">hh.vacancies.employer({text:'javascript', region:[1, 2]},
+    function(result){
+        function alertName (vacancy){
+            alert (vacancy.name)
+        }
+        result.vacancies.forEach(alertName)
+    }
+)</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>query</b>
+									
+								</dt>
+								<dd>Hash with query params</dd>
+							
+								<dt>
+									<b>callback</b>
+									
+								</dt>
+								<dd>CallBack function, receive <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a></dd>
 							
 							</dl>
 						

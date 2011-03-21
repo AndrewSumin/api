@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hh</title>
+		<title>JsDoc Reference - hhSearchVacancy</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -210,7 +210,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hh
+				Class hhSearchVacancy
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -218,7 +218,7 @@ ul.inheritsList
 				
 				
 			
-				Holds functionality.
+				
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/api.js.html">api.js</a>.
@@ -227,8 +227,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hh.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hhSearchVacancy.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -240,9 +240,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hh.html#constructor">hh</a></b>
+								<b><a href="../symbols/hhSearchVacancy.html#constructor">hhSearchVacancy</a></b>(json, query)
 							</div>
-							<div class="description"></div>
+							<div class="description">Search vacancy result object.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -253,30 +253,43 @@ ul.inheritsList
 			
 				
 				
-				
-				
-			
-
-<!-- ============================== methods summary ======================== -->
-			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hh.">
-					<caption>Method Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class hhSearchVacancy.">
+					<caption>Field Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">hh.<b><a href="../symbols/hh.html#.employer">employer</a></b>(id, callback)
+								<div class="fixedFont">
+								<b><a href="../symbols/hhSearchVacancy.html#found">found</a></b>
 								</div>
-								<div class="description">Get Employer info</div>
+								<div class="description">number of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/hhSearchVacancy.html#pager">pager</a></b>
+								</div>
+								<div class="description">Pager, see <a href="../symbols/hhPager.html">hhPager</a></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/hhSearchVacancy.html#vacancies">vacancies</a></b>
+								</div>
+								<div class="description">List of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a></div>
 							</td>
 						</tr>
 					
@@ -286,6 +299,9 @@ ul.inheritsList
 				
 				
 			
+
+<!-- ============================== methods summary ======================== -->
+			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -293,21 +309,38 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hh</b>
+						<b>hhSearchVacancy</b>(json, query)
 				</div>
 				
 				<div class="description">
-					
+					Search vacancy result object.
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								 <b>json</b>
+								
+							</dt>
+								<dd>JSON response from api</dd>
+						
+							<dt>
+								 <b>query</b>
+								
+							</dt>
+								<dd>Hash of query params</dd>
+						
+						</dl>
 					
 					
 					
@@ -321,56 +354,69 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
-					<a name=".employer"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name="found"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">hh.</span><b>employer</b>(id, callback)
+					<span class="light">{Number}</span>
+					<b>found</b>
 					
 					</div>
 					<div class="description">
-						Get Employer info
+						number of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a>
 						
 						
 					</div>
 					
 					
-					
-					<pre class="code">hh.employer(1455,
-    function(employer){
-        alert (employer.name)
-    }
-)</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>id</b>
-									
-								</dt>
-								<dd>Employer id</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
+
 						
 						
 						
+						
+
+					<hr />
+				
+					<a name="pager"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Object}</span>
+					<b>pager</b>
+					
+					</div>
+					<div class="description">
+						Pager, see <a href="../symbols/hhPager.html">hhPager</a>
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="vacancies"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Array}</span>
+					<b>vacancies</b>
+					
+					</div>
+					<div class="description">
+						List of <a href="../symbols/hhVacancyShort.html">hhVacancyShort</a>
+						
+						
+					</div>
+					
+					
+
 						
 						
 						
@@ -378,6 +424,9 @@ ul.inheritsList
 
 					
 				
+			
+
+<!-- ============================== method details ========================= -->		
 			
 			
 <!-- ============================== event details ========================= -->		
@@ -390,7 +439,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 13:46:29 GMT+0300 (MSK)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 13:46:30 GMT+0300 (MSK)
 		</div>
 	</body>
 </html>

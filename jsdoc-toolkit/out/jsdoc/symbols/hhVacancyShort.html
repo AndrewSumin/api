@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hh</title>
+		<title>JsDoc Reference - hhVacancyShort</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -210,7 +210,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace hh
+				Class hhVacancyShort
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -218,7 +218,7 @@ ul.inheritsList
 				
 				
 			
-				Holds functionality.
+				
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/api.js.html">api.js</a>.
@@ -227,8 +227,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hh.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hhVacancyShort.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -240,7 +240,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hh.html#constructor">hh</a></b>
+								<b><a href="../symbols/hhVacancyShort.html#constructor">hhVacancyShort</a></b>(JSON)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -251,40 +251,8 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-				
-				
-				
-				
-			
 
 <!-- ============================== methods summary ======================== -->
-			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hh.">
-					<caption>Method Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">hh.<b><a href="../symbols/hh.html#.employer">employer</a></b>(id, callback)
-								</div>
-								<div class="description">Get Employer info</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -293,11 +261,11 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>hh</b>
+						<b>hhVacancyShort</b>(JSON)
 				</div>
 				
 				<div class="description">
@@ -307,7 +275,77 @@ ul.inheritsList
 				
 				
 				
+				<pre class="code">// example
+{
+    "id":"4069864",
+    "link":[
+        {
+            "rel":"self",
+            "type":"application/json",
+            "href":"http://api.hh.ru/1/json/vacancy/4069864/"
+        },{
+            "rel":"alternate",
+            "type":"text/html",
+            "href":"http://hh.ru/vacancy/4069864"
+        }
+    ],
+    "name":"PHP программист",
+    "employer":{
+        "id":"1455",
+        "link":[
+            {
+                "rel":"self",
+                "type":"application/json",
+                "href":"http://api.hh.ru/1/json/employer/1455/"
+            },{
+                "rel":"alternate",
+                "type":"text/html",
+                "href":"http://hh.ru/employer/1455"
+            }
+        ],
+        "name":"HeadHunter",
+        "department":{
+            "code":"hh-1455-TECH",
+            "link":[
+                {
+                    "type":"text/html",
+                    "href":"http://hh.ru/employer/1455?dpt=hh-1455-TECH"
+                }
+            ],
+            "name":"HeadHunter::Технический департамент"
+        }
+    },
+    "update":{
+        "timestamp":"1300178027"
+    },
+    "salary":{
+        "from":"80000",
+        "currency":{
+            "code":"RUR",
+            "name":"руб."
+        }
+    },
+    "region":{
+        "id":"1",
+        "name":"Москва"
+    },
+    "site":"http://hh.ru"
+}</pre>
 				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{Object}</span>  <b>JSON</b>
+								
+							</dt>
+								<dd>Response from JSON API</dd>
+						
+						</dl>
 					
 					
 					
@@ -324,61 +362,6 @@ ul.inheritsList
 
 <!-- ============================== method details ========================= -->		
 			
-				<div class="sectionTitle">
-					Method Detail
-				</div>
-				
-					<a name=".employer"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">hh.</span><b>employer</b>(id, callback)
-					
-					</div>
-					<div class="description">
-						Get Employer info
-						
-						
-					</div>
-					
-					
-					
-					<pre class="code">hh.employer(1455,
-    function(employer){
-        alert (employer.name)
-    }
-)</pre>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>id</b>
-									
-								</dt>
-								<dd>Employer id</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					
-				
-			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -390,7 +373,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 13:46:29 GMT+0300 (MSK)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 13:46:30 GMT+0300 (MSK)
 		</div>
 	</body>
 </html>
