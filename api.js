@@ -126,6 +126,11 @@
     var hh = {};
 
     /**
+     * @namespace Full and short vacancy objects.
+     */
+    hh.vacancy = {};
+
+    /**
      * @constructor
      * @example
      * // JSON example
@@ -185,8 +190,7 @@
      *     "site":"http://hh.ru"
      * }
      */
-
-    hh.vacancy = function(vacancy){
+    hh.vacancy.short = function(vacancy){
         var links = {}
         for (var i =0; i < vacancy.link.length; i++){
             links[vacancy.link[i].rel] = vacancy.link[i];
@@ -224,7 +228,7 @@
      * @param query Hash of query params
      */
     hh.search.vacancy = function(json, query){
-        this.vacancies = json.vacancies.map(hh.vacancy);
+        this.vacancies = json.vacancies.map(hh.vacancy.short);
         this.init(json, query);
     };
     hh.search.vacancy.prototype = hh.search;
@@ -316,7 +320,7 @@
      */
     hh.vacancies.employer = function(id, callback) {
         var callbackName = utils.createCallback(function(json){
-            callback(json.map(hh.vacancy));
+            callback(json.map(hh.vacancy.short));
         });
         utils.createScript({src: utils.createSrc('/vacancy/employer/' + id + '/', {}, callbackName)});
     };
