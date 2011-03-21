@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru-RU">
     <head>
-        <title>Прототип js api</title>
+        <title>Группа frontend, HeadHunter, март 2011</title>
         <meta charset="UTF-8">
         <style>
             body{
@@ -18,11 +18,15 @@
                 <a id="next" href="javascript:void(0)">еще</a>
             </div>
         </div>
-        <div id="employer" style="float:left; width:500px; margin-left:50px;"></div>
+        <div style="float:left; width:500px; margin-left:50px;">
+            <div id="employername"></div>
+            <div id="employer"></div>
+        </div>
         <script>
             (function(){
                 var search = document.getElementById('search');
                 var employer = document.getElementById('employer');
+                var employername = document.getElementById('employername');
                 var prev = document.getElementById('prev');
                 var next = document.getElementById('next');
                 function drawVacancy(vacancy){
@@ -35,11 +39,15 @@
                         return false;
                     };
                 }
-                function callbackEmployer(vacancyList){
+                function callbackEmployerVacancies(vacancyList){
                     employer.innerHTML = vacancyList.map(drawVacancy).join('');
                 }
+                function callbackEmployer(employer){
+                    employername.innerHTML = employer.name;
+                }
                 hh.vacancies.search({text:'javascript', region:[1, 2]}, callbackSearch);
-                hh.vacancies.employer(1455, callbackEmployer);
+                hh.vacancies.employer(1455, callbackEmployerVacancies);
+                hh.employer(1455, callbackEmployer);
             })();
         </script>
     </body>

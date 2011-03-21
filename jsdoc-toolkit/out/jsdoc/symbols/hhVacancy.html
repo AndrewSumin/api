@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - hhPager</title>
+		<title>JsDoc Reference - hhVacancy</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -216,7 +216,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class hhPager
+				Class hhVacancy
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -233,7 +233,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hhPager.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class hhVacancy.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -246,7 +246,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/hhPager.html#constructor">hhPager</a></b>(object)
+								<b><a href="../symbols/hhVacancy.html#constructor">hhVacancy</a></b>(vacancy)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -259,7 +259,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class hhPager.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class hhVacancy.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -273,9 +273,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/hhPager.html#pages">pages</a></b>
+								<b><a href="../symbols/hhVacancy.html#employer">employer</a></b>
 								</div>
-								<div class="description">Total number of pages</div>
+								<div class="description">Hold employer functionality see <a href="../symbols/hhShortEmployer.html">hhShortEmployer</a></div>
 							</td>
 						</tr>
 					
@@ -288,51 +288,6 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class hhPager.">
-					<caption>Method Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hhPager.html#exact">exact</a></b>(callback)
-								</div>
-								<div class="description">Get exact page of vacancies</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hhPager.html#next">next</a></b>(callback)
-								</div>
-								<div class="description">Get next page of vacancies</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/hhPager.html#prev">prev</a></b>(callback)
-								</div>
-								<div class="description">Get previous page of vacancies</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -344,7 +299,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>hhPager</b>(object)
+						<b>hhVacancy</b>(vacancy)
 				</div>
 				
 				<div class="description">
@@ -360,10 +315,10 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{Object}</span>  <b>object</b>
+								<span class="light fixedFont">{JSON}</span>  <b>vacancy</b>
 								
 							</dt>
-								<dd>result of search <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a></dd>
+								<dd>Vacancy JSON</dd>
 						
 						</dl>
 					
@@ -383,15 +338,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="pages"> </a>
+					<a name="employer"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>pages</b>
+					
+					<b>employer</b>
 					
 					</div>
 					<div class="description">
-						Total number of pages
+						Hold employer functionality see <a href="../symbols/hhShortEmployer.html">hhShortEmployer</a>
 						
 						
 					</div>
@@ -409,119 +364,6 @@ ul.inheritsList
 
 <!-- ============================== method details ========================= -->		
 			
-				<div class="sectionTitle">
-					Method Detail
-				</div>
-				
-					<a name="exact"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>exact</b>(callback)
-					
-					</div>
-					<div class="description">
-						Get exact page of vacancies
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Receives a <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="next"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>next</b>(callback)
-					
-					</div>
-					<div class="description">
-						Get next page of vacancies
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Receives a <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="prev"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>prev</b>(callback)
-					
-					</div>
-					<div class="description">
-						Get previous page of vacancies
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>callback</b>
-									
-								</dt>
-								<dd>Receives a <a href="../symbols/hhSearchVacancy.html">hhSearchVacancy</a></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					
-				
-			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -533,7 +375,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 16:35:02 GMT+0300 (MSK)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Mar 21 2011 16:35:03 GMT+0300 (MSK)
 		</div>
 	</body>
 </html>

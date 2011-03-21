@@ -122,9 +122,17 @@
 
 
     /**
-     * @name hhVacancyShort
+     * @private
+     */
+    function newShortVacancy (vacancy){
+        vacancy.prototype = new hhShortVacancy(vacancy);
+        return vacancy;
+    }
+
+    /**
+     * @name hhShortVacancy
      * @constructor
-     * @param {Object} JSON Response from JSON API
+     * @param {JSON} vacancy Short vacancy JSON
      * @example
      * // example
      * {
@@ -183,22 +191,118 @@
      *     "site":"http://hh.ru"
      * }
      */
-    var hhVacancyShort = function (vacancy){
-        var links = {}
-        for (var i =0; i < vacancy.link.length; i++){
-            links[vacancy.link[i].rel] = vacancy.link[i];
-            if (vacancy.salary && vacancy.salary.currency.__text){
-                vacancy.salary.currency.name = vacancy.salary.currency__text;
+    var hhShortVacancy = function(self){
+        var links = {};
+        for (var i =0; i < self.link.length; i++){
+            links[self.link[i].rel] = self.link[i];
+            if (self.salary && self.salary.currency.__text){
+                self.salary.currency.name = self.salary.currency__text;
             }
         }
-        vacancy.link = links;
-        vacancy.employer.getFullInfo = function(callback){
-            hh.employer(vacancy.employer.id, callback)
-        };
-        vacancy.employer.getVacancies = function(callback){
-            hh.vacancies.employer(vacancy.employer.id, callback);
-        };
+        self.link = links;
+        self.employer = newShortEmployer(self.employer);
+    };
+    hhShortVacancy.prototype = {
+        /**
+         * @description Hold employer functionality see {@link hhShortEmployer}
+         * @type {Object}
+         */
+        employer: null,
+        /**
+         * @description Get {@link hhVacancy}
+         */
+        getVacancy: function(callback){
+            hh.vacancy(this.id, callback);
+        }
+    };
+
+    /**
+     * @private
+     */
+    function newVacancy (vacancy){
+        vacancy.prototype = new hhVacancy(newShortVacancy(vacancy));
         return vacancy;
+    }
+    /**
+     * @name hhVacancy
+     * @constructor
+     * @param {JSON} vacancy Vacancy JSON
+     */
+    var hhVacancy = function (vacancy){
+        vacancy.getVacancy = null;
+    };
+    hhVacancy.prototype = {
+        /**
+         * @description Hold employer functionality see {@link hhShortEmployer}
+         * @type {Object}
+         */
+        employer: null,
+        /**
+         * @ignore
+         */
+        getVacancy: function(callback){
+            hh.vacancy(this.id, callback);
+        }
+    };
+
+    /**
+     * @private
+     */
+    function newShortEmployer (employer){
+        employer.prototype = new hhShortEmployer(employer);
+        return employer;
+    }
+    /**
+     * @name hhShortEmployer
+     * @constructor
+     * @param {JSON} vacancy Short employer JSON
+     */
+    var hhShortEmployer = function(json){};
+    hhShortEmployer.prototype = {
+        /**
+         * @description Get list of {@link hhShortVacancy}
+         * @param {Function} callback
+         */
+        getVacancies: function(callback){
+            hh.vacancies.employer(this.id, callback);
+        },
+        /**
+         * @description Get {@link hhEmployer}
+         * @param {Function} callback
+         */
+        getEmployer: function(callback){
+            hh.employer(this.id, callback)
+        }
+    };
+
+    function newEmployer (employer){
+        employer.prototype = new hhEmployer(employer);
+        return employer;
+    }
+    /**
+     * @name hhEmployer
+     * @constructor
+     * @param {JSON} vacancy Short employer JSON
+     */
+    var hhEmployer = function(json){};
+    hhEmployer.prototype = {
+        /**
+         * @description Get list of {@link hhShortVacancy}
+         * @param {Function} callback
+         */
+        getVacancies: function(callback){
+            hh.vacancies.employer(this.id, callback);
+        },
+        /**
+         * @ignore
+         */
+        getEmployer: null
+    };
+
+    var hhEmployerFull = function(json){
+        json = hhShortEmployer(json)
+        json.getFullInfo = null;
+        return json;
     };
 
     /**
@@ -208,7 +312,7 @@
         /**
          * @private
          */
-        init: function(json, query){
+        _init: function(json, query){
             this.found = json.found;
             this.query = query;
             this.query.page = query.page || 0;
@@ -227,8 +331,8 @@
      * @param query Hash of query params
      */
     var hhSearchVacancy = function(json, query){
-        this.vacancies = json.vacancies.map(hhVacancyShort);
-        this.init(json, query);
+        this.vacancies = json.vacancies.map(newShortVacancy);
+        this._init(json, query);
     };
     hhSearchVacancy.prototype = hhSearch;
 
@@ -286,7 +390,7 @@
     var hh = {};
 
     /**
-     * @description Get Employer info
+     * @description Get employer info
      * @param {Number} id Employer id
      * @param {Function} callback
      * @example
@@ -298,9 +402,27 @@
      */
     hh.employer = function(id, callback){
         var callbackName = utils.createCallback(function(json){
-            callback(json);
+            callback(newEmployer(json));
         });
         utils.createScript({src: utils.createSrc('/employer/' + id + '/', {}, callbackName)});
+    };
+
+    /**
+     * @description Get vacancy info
+     * @param {Number} id Vacancy id
+     * @param {Function} callback
+     * @example
+     * hh.vacancy(1,
+     *     function(vacancy){
+     *         alert (vacancy.name)
+     *     }
+     * )
+     */
+    hh.vacancy = function(id, callback){
+        var callbackName = utils.createCallback(function(json){
+            callback(newVacancy(json));
+        });
+        utils.createScript({src: utils.createSrc('/vacancy/' + id + '/', {}, callbackName)});
     };
 
     /**
@@ -345,7 +467,7 @@
      */
     hh.vacancies.employer = function(id, callback) {
         var callbackName = utils.createCallback(function(json){
-            callback(json.map(hhVacancyShort));
+            callback(json.map(newShortVacancy));
         });
         utils.createScript({src: utils.createSrc('/vacancy/employer/' + id + '/', {}, callbackName)});
     };
