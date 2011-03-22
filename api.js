@@ -192,14 +192,6 @@
      * }
      */
     var hhShortVacancy = function(self){
-        var links = {};
-        for (var i =0; i < self.link.length; i++){
-            links[self.link[i].rel] = self.link[i];
-            if (self.salary && self.salary.currency.__text){
-                self.salary.currency.name = self.salary.currency__text;
-            }
-        }
-        self.link = links;
         self.employer = newShortEmployer(self.employer);
     };
     hhShortVacancy.prototype = {
