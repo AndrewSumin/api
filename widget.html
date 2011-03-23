@@ -30,7 +30,7 @@
                 var prev = document.getElementById('prev');
                 var next = document.getElementById('next');
                 function drawVacancy(vacancy){
-                     return '<div style="margin-bottom:5px;"><a href="'+ vacancy.link.alternate.href +'">' + vacancy.name + '</a> <small>' + vacancy.region.name + '</small></div>';
+                     return '<div style="margin-bottom:5px;"><a href="'+ vacancy.links.alternate.href +'">' + vacancy.name + '</a> <small>' + vacancy.region.name + '</small></div>';
                 }
                 function callbackSearch(result){
                     search.innerHTML += result.vacancies.map(drawVacancy).join('');
