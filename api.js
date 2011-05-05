@@ -100,7 +100,7 @@
             head.insertBefore(script, head.firstChild);
         },
         createSrc: function(path, query, callbackName){
-            return host + path + '?' + this.createQuery(query, callbackName)
+            return host + path + '?' + this.createQuery(query, callbackName);
         },
         createQuery: function(query, callbackName){
             var result = ['callback=' + callbackName];
@@ -263,7 +263,7 @@
          * @param {Function} callback
          */
         getEmployer: function(callback){
-            hh.employer(this.id, callback)
+            hh.employer(this.id, callback);
         }
     };
 
@@ -292,7 +292,7 @@
     };
 
     var hhEmployerFull = function(json){
-        json = hhShortEmployer(json)
+        json = hhShortEmployer(json);
         json.getFullInfo = null;
         return json;
     };
