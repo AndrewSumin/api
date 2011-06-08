@@ -30,12 +30,17 @@
                 function vacancies(vacancies){
                     document.getElementById('search').innerHTML = vacancies.join('');
                 }
+                function pages(pages){
+                    document.getElementById('next').onclick = function(){
+                        pages.next().done(result);
+                    };
+                }
                 function result(response){
                     response.iterate(vacancy)
-                            .finish(vacancies);
+                            .finish(vacancies)
+                            .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript'})
-                            .done(result);
+                hh.vacancies.search({text:'javascript'}).done(result);
             })();
         </script>
     </body>

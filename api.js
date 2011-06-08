@@ -74,17 +74,21 @@
 
     hh.vacancies.search = function(query) {
         var dfd = defer();
+        var clear = function(dfd){
+            dfd.finish = undefined;
+        };
         var callbackName = utils.createCallback(function(json){
             dfd.resolve(json);
         });
         utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
         dfd.found = function(callback){
-            this.finish = undefined;
+            clear(this);
             this.then(function(json){callback(json.found);});
             return this;
         };
         dfd.iterate = function(callback){
             var result = [];
+            clear(this);
             this.then(function(json){
                 for (var i = 0, l = json.vacancies.length; i < l; i++){
                     result.push(callback(json.vacancies[i], i, json.vacancies));
@@ -96,7 +100,20 @@
             };
             return this;
         };
+        dfd.pages = function(callback){
+            clear(this);
+            this.then(function(json){
+                var dfd = defer();
+                dfd.next = function(){
+                    query.page = query.page ? query.page + 1 : 1;
+                    return hh.vacancies.search(query);
+                };
+                callback(dfd);
+            });
+            return this;
+        };
         dfd.done = function(callback){
+            clear(this);
             callback(this);
             return this;
         };
