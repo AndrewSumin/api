@@ -41,32 +41,28 @@
                 result.push(key + '=' + value[i]);
             }
             return result.join('&');
+        },
+        clone: function(o) {
+            if(!o || 'object' !== typeof o)  {
+                return o;
+            }
+            varc = 'function' === typeof o.pop ? [] : {};
+            var p, v, c = {};
+            for(p in o) {
+                if(o.hasOwnProperty(p)) {
+                    v = o[p];
+                    if(v && 'object' === typeof v) {
+                        c[p] = this.clone(v);
+                    } else {
+                        c[p] = v;
+                    }
+                }
+            }
+            return c;
         }
     };
     
-    var defer = (
-        function (
-            a, // placeholder for pending callbacks
-            b  // placeholder for fulfilled value
-        ) { 
-            a = []; // callbacks or 0 if fulfilled
-            return {
-                resolve: function (c) { // fulfillment value
-                    b = c; // store the fulfilled value
-                    // send the value to every pre-registered callback
-                    while (a.length)
-                        a.shift()(b);
-                    // switch state to "fulfilled"
-                    a=0;
-                },
-                then: function (c) { // callback
-                    a ? // if it's not fulfilled yet
-                    a.push(c) : // added the callback to the queue
-                    c(b); // otherwise, let it know what the fulfilled value
-                          // was immediately
-                }
-            }
-        });
+    var defer = function(a,b){a=[];return{resolve:function(c){b=c;while(a.length)a.shift()(b);a=0;},then:function(c){a?a.push(c):c(b);}};};
         
     var hh = {};
 
@@ -103,9 +99,27 @@
         dfd.pages = function(callback){
             clear(this);
             this.then(function(json){
+                var page = query.page || 0,
+                    found = json.found,
+                    pages = Math.ceil(found / (query.items || 20));
+                
                 var dfd = defer();
+                dfd.page = function(callback){
+                    callback(page);
+                    return this;
+                };
+                dfd.pages = function(callback){
+                    callback(pages);
+                    return this;
+                };
                 dfd.next = function(){
-                    query.page = query.page ? query.page + 1 : 1;
+                    query = utils.clone(query);
+                    query.page = page + 1;
+                    return hh.vacancies.search(query);
+                };
+                dfd.previous = function(){
+                    query = utils.clone(query);
+                    query.page = page - 1;
                     return hh.vacancies.search(query);
                 };
                 callback(dfd);
