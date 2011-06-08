@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+    <head>
+        <title>JS API</title>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                font-family:tahoma;
+            }
+        </style>
+        <script type="text/javascript" src="http://api.sumin.putin.pyn.ru/2/js/api.js"></script>
+    </head>
+    <body>
+        <div style="float:left; width:500px;">
+            <div id="search"></div>
+            <div>
+                <br/>
+                <a id="next" href="javascript:void(0)">еще</a>
+            </div>
+        </div>
+        <div style="float:left; width:500px; margin-left:50px;">
+            <div id="employername"></div>
+            <div id="employer"></div>
+        </div>
+        <script>
+            (function(){
+                hh.vacancies.search({text:'javascript'})
+                            .iterate(function (vacancy){
+                                return '<a href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</a><br/>';
+                            })
+                            .finish(function(result){document.getElementById('search').innerHTML = result.join('')})
+                            .found(console.log)
+                            .done(console.log)
+            })();
+        </script>
+    </body>
+</html>
