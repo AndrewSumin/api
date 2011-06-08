@@ -25,7 +25,7 @@
             head.insertBefore(script, head.firstChild);
         },
         createSrc: function(path, query, callbackName){
-            return host + path + '?' + this.createQuery(query, callbackName)
+            return host + path + '?' + this.createQuery(query, callbackName);
         },
         createQuery: function(query, callbackName){
             var result = ['callback=' + callbackName];
@@ -131,7 +131,6 @@
 
             return deferred;
         },
-
         // Full fledged deferred (two callbacks list)
         Deferred: function( func ) {
             var deferred = hh._Deferred(),
