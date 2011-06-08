@@ -70,34 +70,27 @@
 
     hh.vacancies.search = function(query) {
         var dfd = defer();
-        var clear = function(dfd){
-            dfd.finish = undefined;
-        };
         var callbackName = utils.createCallback(function(json){
             dfd.resolve(json);
         });
         utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
         dfd.found = function(callback){
-            clear(this);
             this.then(function(json){callback(json.found);});
             return this;
         };
-        dfd.iterate = function(callback){
-            var result = [];
-            clear(this);
+        dfd.iterate = function(callback, resultCallback){
             this.then(function(json){
+                var result = [];
                 for (var i = 0, l = json.vacancies.length; i < l; i++){
                     result.push(callback(json.vacancies[i], i, json.vacancies));
                 }
+                if (resultCallback){
+                    resultCallback(result);
+                }   
             });
-            this.finish = function(callback){
-                this.then(function(){callback(result);});
-                return this;
-            };
             return this;
         };
         dfd.pages = function(callback){
-            clear(this);
             this.then(function(json){
                 var page = query.page || 0,
                     found = json.found,
@@ -114,12 +107,12 @@
                 };
                 dfd.next = function(){
                     query = utils.clone(query);
-                    query.page = page + 1;
+                    query.page = Math.min(page + 1, pages);
                     return hh.vacancies.search(query);
                 };
                 dfd.previous = function(){
                     query = utils.clone(query);
-                    query.page = page - 1;
+                    query.page = Math.max(page - 1, 0);
                     return hh.vacancies.search(query);
                 };
                 callback(dfd);
@@ -127,7 +120,6 @@
             return this;
         };
         dfd.done = function(callback){
-            clear(this);
             callback(this);
             return this;
         };

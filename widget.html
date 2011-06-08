@@ -36,8 +36,7 @@
                     };
                 }
                 function result(response){
-                    response.iterate(vacancy)
-                            .finish(vacancies)
+                    response.iterate(vacancy, vacancies)
                             .pages(pages);
                 }
                 hh.vacancies.search({text:'javascript'}).done(result);
