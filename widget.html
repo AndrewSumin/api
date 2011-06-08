@@ -8,7 +8,7 @@
                 font-family:tahoma;
             }
         </style>
-        <script type="text/javascript" src="http://hhapi.jsx.ru/api.js"></script>
+        <script type="text/javascript" src="api.js"></script>
     </head>
     <body>
         <div style="float:left; width:500px;">
@@ -28,13 +28,14 @@
                     return '<a href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</a><br/>';
                 }
                 function vacancies(vacancies){
-                    document.getElementById('search').innerHTML = result.join('');
+                    document.getElementById('search').innerHTML = vacancies.join('');
                 }
-                function pages(pages){
+                function result(response){
+                    response.iterate(vacancy)
+                            .finish(vacancies);
                 }
                 hh.vacancies.search({text:'javascript'})
-                            .iterate(vacancy)
-                            .finish(vacancies)
+                            .done(result);
             })();
         </script>
     </body>
