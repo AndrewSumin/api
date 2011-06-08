@@ -153,8 +153,8 @@
                     var methods = {
                         done: [ fnDone, "resolve" ],
                         fail: [ fnFail, "reject" ]
-                    }
-                    for (i in methods){
+                    };
+                    for (var i in methods){
                         map (i, methods[i]);
                     }
                     function map ( handler, data ) {
@@ -173,13 +173,13 @@
                         } else {
                             deferred[ handler ]( newDefer[ action ] );
                         }
-                    };
+                    }
                 }).promise();
             };
             // Get a promise for this deferred
             // If obj is provided, the promise aspect is added to the object
             deferred.promise = function( obj ) {
-                if ( obj == null ) {
+                if ( obj === null ) {
                     if ( promise ) {
                         return promise;
                     }
@@ -190,7 +190,7 @@
                     obj[ promiseMethods[i] ] = deferred[ promiseMethods[i] ];
                 }
                 return obj;
-            }
+            };
             // Make sure only one callback list will be used
             deferred.done( failDeferred.cancel ).fail( deferred.cancel );
             // Unexpose cancel
@@ -238,7 +238,7 @@
             }
             return deferred.promise();
         }
-    }
+    };
 
 
     hh.vacancies = {};
@@ -252,7 +252,7 @@
         return dfd.promise({
             found: function(callback){
                 this.finish = undefined;
-                this.done(function(json){callback(json.found)});
+                this.done(function(json){callback(json.found);});
                 return this;
             },
             iterate: function(callback){
@@ -263,9 +263,9 @@
                     }
                 });
                 this.finish = function(callback){
-                    this.done(function(){callback(result)});
+                    this.done(function(){callback(result);});
                     return this;
-                }
+                };
                 return this;
             }
         });

@@ -24,13 +24,17 @@
         </div>
         <script>
             (function(){
+                function vacancy(vacancy){
+                    return '<a href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</a><br/>';
+                }
+                function vacancies(vacancies){
+                    document.getElementById('search').innerHTML = result.join('');
+                }
+                function pages(pages){
+                }
                 hh.vacancies.search({text:'javascript'})
-                            .iterate(function (vacancy){
-                                return '<a href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</a><br/>';
-                            })
-                            .finish(function(result){document.getElementById('search').innerHTML = result.join('')})
-                            .found(console.log)
-                            .done(console.log)
+                            .iterate(vacancy)
+                            .finish(vacancies)
             })();
         </script>
     </body>
