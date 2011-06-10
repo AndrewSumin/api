@@ -62,68 +62,126 @@
         }
     };
     
-    var defer = function(a,b){a=[];return{resolve:function(c){b=c;while(a.length)a.shift()(b);a=0;},then:function(c){a?a.push(c):c(b);}};};
+    var defer = function(a,b){
+        a=[];
+        return{
+            resolve: function(c){
+                b=c;
+                while(a.length) a.shift()(b);
+                a=0;
+            },
+            then: function(c){
+                a ? a.push(c) : c(b);
+            }
+        };
+    };
         
     var hh = {};
 
     hh.vacancies = {};
 
     hh.vacancies.search = function(query) {
-        var dfd = defer();
+        var success = defer(),
+            fail = defer(),
+            error = false,
+            timeout;
         var callbackName = utils.createCallback(function(json){
-            dfd.resolve(json);
+            doSuccess(json);
         });
-        utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
-        dfd.found = function(callback){
-            this.then(function(json){callback(json.found);});
-            return this;
+        function doSuccess(json){
+            if (timeout){
+                window.clearTimeout(timeout);
+            }
+            if (!json.vacancies){
+                doFail({error:{code:500, message:'Error, try later'}})
+            }
+            if (!error){
+                success.resolve(json);
+            }
+        }
+        function doFail(json){
+            error = true;
+            fail.resolve(json);
+        }
+        if (query != null){
+            utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
+            timeout = window.setTimeout(doFail.bind(this, {error:{code:503, message:'Service unavaliable'}}), 30000);
+        }
+        return {
+            found: function(callback){
+                success.then(function(json){callback(json.found);});
+                return this;
+            },
+            iterate: function(callback, resultCallback){
+                success.then(function(json){
+                    var result = [];
+                    for (var i = 0, l = json.vacancies.length; i < l; i++){
+                        result.push(callback(json.vacancies[i], i, json.vacancies));
+                    }
+                    if (resultCallback){
+                        resultCallback(result);
+                    }   
+                });
+                return this;
+            },
+            pages: function(callback){
+                success.then(function(json){
+                    var page = query.page || 0,
+                        found = json.found,
+                        pages = Math.ceil(found / (query.items || 20));
+                    
+                    var success = defer();
+                    success.page = function(callback){
+                        callback(page);
+                        return this;
+                    };
+                    success.pages = function(callback){
+                        callback(pages);
+                        return this;
+                    };
+                    success.next = function(){
+                        query = utils.clone(query);
+                        query.page++;
+                        query = query.page <= pages ? query : null;
+                        return hh.vacancies.search(query);
+                    };
+                    success.previous = function(){
+                        query = utils.clone(query);
+                        query.page--;
+                        query = query.page >= 0 ? query : null;
+                        return hh.vacancies.search(query);
+                    };
+                    callback(success);
+                });
+                return this;
+            },
+            done: function(callback){
+                callback(this);
+                return this;
+            },
+            fail: function(callback){
+                fail.then(function(error){
+                    callback(error);
+                });
+                return this;
+            },
+            error: function(callback){
+                fail.then(function(error){
+                    if (error.code === 500){
+                        callback(error);
+                    }
+                });
+                return this;
+            },
+            timeout: function(callback){
+                fail.then(function(error){
+                    if (error.code === 503){
+                        callaback(error);
+                    }
+                })
+                return this;
+            }
         };
-        dfd.iterate = function(callback, resultCallback){
-            this.then(function(json){
-                var result = [];
-                for (var i = 0, l = json.vacancies.length; i < l; i++){
-                    result.push(callback(json.vacancies[i], i, json.vacancies));
-                }
-                if (resultCallback){
-                    resultCallback(result);
-                }   
-            });
-            return this;
-        };
-        dfd.pages = function(callback){
-            this.then(function(json){
-                var page = query.page || 0,
-                    found = json.found,
-                    pages = Math.ceil(found / (query.items || 20));
-                
-                var dfd = defer();
-                dfd.page = function(callback){
-                    callback(page);
-                    return this;
-                };
-                dfd.pages = function(callback){
-                    callback(pages);
-                    return this;
-                };
-                dfd.next = function(){
-                    query = utils.clone(query);
-                    query.page = Math.min(page + 1, pages);
-                    return hh.vacancies.search(query);
-                };
-                dfd.previous = function(){
-                    query = utils.clone(query);
-                    query.page = Math.max(page - 1, 0);
-                    return hh.vacancies.search(query);
-                };
-                callback(dfd);
-            });
-            return this;
-        };
-        dfd.done = function(callback){
-            callback(this);
-            return this;
-        };
-        return dfd;
     };
 
     window[name] = hh;

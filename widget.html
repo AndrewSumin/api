@@ -39,7 +39,10 @@
                     response.iterate(vacancy, vacancies)
                             .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript'}).done(result);
+                hh.vacancies.search({text:'javascript'})
+                            .done(result)
+                            .error(console.log)
+                            .timeout(console.log);
             })();
         </script>
     </body>
