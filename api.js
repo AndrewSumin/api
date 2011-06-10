@@ -141,14 +141,14 @@
                     };
                     success.next = function(){
                         query = utils.clone(query);
-                        query.page++;
-                        query = query.page <= pages ? query : null;
+                        query.page = page + 1;
+                        query = (query.page <= pages ? query : null);
                         return hh.vacancies.search(query);
                     };
                     success.previous = function(){
                         query = utils.clone(query);
-                        query.page--;
-                        query = query.page >= 0 ? query : null;
+                        query.page = page - 1;
+                        query = (query.page >= 0 ? query : null);
                         return hh.vacancies.search(query);
                     };
                     callback(success);
