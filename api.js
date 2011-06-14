@@ -126,32 +126,32 @@
             },
             pages: function(callback){
                 success.then(function(json){
-                    var page = query.page || 0,
+                    var pager = {},
+                        page = query.page || 0,
                         found = json.found,
                         pages = Math.ceil(found / (query.items || 20));
                     
-                    var success = defer();
-                    success.page = function(callback){
+                    pager.page = function(callback){
                         callback(page);
                         return this;
                     };
-                    success.pages = function(callback){
+                    pager.pages = function(callback){
                         callback(pages);
                         return this;
                     };
-                    success.next = function(){
+                    pager.next = function(){
                         query = utils.clone(query);
                         query.page = page + 1;
                         query = (query.page <= pages ? query : null);
                         return hh.vacancies.search(query);
                     };
-                    success.previous = function(){
+                    pager.previous = function(){
                         query = utils.clone(query);
                         query.page = page - 1;
                         query = (query.page >= 0 ? query : null);
                         return hh.vacancies.search(query);
                     };
-                    callback(success);
+                    callback(pager);
                 });
                 return this;
             },

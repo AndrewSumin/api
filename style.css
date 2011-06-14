@@ -1,0 +1,9 @@
+body{
+    font-family:tahoma;
+    font-size:14px;
+}
+
+.vacancy{
+    display:inline-block;
+    margin-bottom:5px;
+}

@@ -3,11 +3,7 @@
     <head>
         <title>JS API</title>
         <meta charset="UTF-8">
-        <style>
-            body{
-                font-family:tahoma;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
         <script type="text/javascript" src="api.js"></script>
     </head>
     <body>
@@ -25,7 +21,7 @@
         <script>
             (function(){
                 function vacancy(vacancy){
-                    return '<a href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</a><br/>';
+                    return '<div class="vacancy"><a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a>';
                 }
                 function vacancies(vacancies){
                     document.getElementById('search').innerHTML = vacancies.join('');
@@ -39,10 +35,7 @@
                     response.iterate(vacancy, vacancies)
                             .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript'})
-                            .done(result)
-                            .error(console.log)
-                            .timeout(console.log);
+                hh.vacancies.search({text:'javascript'}).done(result);
             })();
         </script>
     </body>
