@@ -9,8 +9,8 @@
     <body>
         <div style="float:left; width:500px;">
             <div id="search"></div>
-            <div>
-                <a id="previous" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next" href="javascript:void(0)">вперед</a>
+            <div class="pager">
+                <a id="previous" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next" href="javascript:void(0)">еще 5 вакансий</a>
             </div>
         </div>
         <div style="float:left; width:500px; margin-left:50px;">
@@ -20,21 +20,47 @@
         <script>
             (function(){
                 function vacancy(vacancy){
-                    return '<div class="vacancy"><a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a></div>';
+                    return '<div class="vacancy">' + 
+                               '<a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a>' + 
+                               '<br/>' + 
+                               '<span class="salary">' +
+                                   (vacancy.salary 
+                                       ? '<span class="salary__set">' + 
+                                             (vacancy.salary.from
+                                                 ? 'от ' + vacancy.salary.from
+                                                 : '') + 
+                                             (vacancy.salary.to
+                                                 ? ' до ' + vacancy.salary.to
+                                                 : '') + 
+                                             (vacancy.salary.from || vacancy.salary.to
+                                                 ? ' ' + vacancy.salary.currency.name
+                                                 : '') +
+                                         '</span>'
+                                       : '<span class="salary__notset">з/п не указанна</span>') +
+                                '</span>' +
+                                ' <a class="employer" href="' + (vacancy.employer.links.alternate ? vacancy.employer.links.alternate.href : '#') + '">' + vacancy.employer.name + '</a>'+
+                            '</div>';
                 }
                 function vacancies(vacancies){
                     document.getElementById('search').innerHTML = vacancies.join('');
                 }
                 function pages(pages){
-                    document.getElementById('next').onclick = function(){
+                    var next = document.getElementById('next');
+                    next.style.visibility = pages.isNext() ? 'visible' : 'hidden';
+                    next.onclick = function(){
                         pages.next().done(result);
+                    };
+                    var previous = document.getElementById('previous');
+                    previous.style.visibility = pages.isPrevious() ? 'visible' : 'hidden';
+                    previous.onclick = function(){
+                        pages.previous().done(result);
                     };
                 }
                 function result(response){
                     response.iterate(vacancy, vacancies)
                             .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript'})
+                hh.vacancies.search({text:'javascript', items:5})
                             .done(result)
                             .fail(console.log);
             })();

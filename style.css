@@ -2,7 +2,31 @@ body{
     font-family:Tahoma, Arial;
     font-size:14px;
 }
+a{
+    color:#076CC7;
+}
 
 .vacancy{
-    margin-bottom:5px;
+    margin-bottom:10px;
 }
+
+.pager{
+    margin-top:15px;
+}
+
+.salary{
+}
+    .salary__set{
+        color:#090;
+    }
+    .salary__notset{
+        color:#ccc;
+    }
+    
+.employer{
+    color:#ccc;
+    text-decoration:none;
+}
+    .employer:hover{
+        text-decoration:underline;
+    }
