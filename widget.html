@@ -10,8 +10,7 @@
         <div style="float:left; width:500px;">
             <div id="search"></div>
             <div>
-                <br/>
-                <a id="next" href="javascript:void(0)">еще</a>
+                <a id="previous" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next" href="javascript:void(0)">вперед</a>
             </div>
         </div>
         <div style="float:left; width:500px; margin-left:50px;">
@@ -21,7 +20,7 @@
         <script>
             (function(){
                 function vacancy(vacancy){
-                    return '<div class="vacancy"><a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a>';
+                    return '<div class="vacancy"><a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a></div>';
                 }
                 function vacancies(vacancies){
                     document.getElementById('search').innerHTML = vacancies.join('');
@@ -35,7 +34,9 @@
                     response.iterate(vacancy, vacancies)
                             .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript'}).done(result);
+                hh.vacancies.search({text:'javascript'})
+                            .done(result)
+                            .fail(console.log);
             })();
         </script>
     </body>

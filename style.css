@@ -1,9 +1,8 @@
 body{
-    font-family:tahoma;
+    font-family:Tahoma, Arial;
     font-size:14px;
 }
 
 .vacancy{
-    display:inline-block;
     margin-bottom:5px;
 }

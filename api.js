@@ -93,7 +93,7 @@
                 window.clearTimeout(timeout);
             }
             if (!json.vacancies){
-                doFail({error:{code:500, message:'Error, try later'}})
+                doFail({error:{code:500, message:'Error, try later'}});
             }
             if (!error){
                 success.resolve(json);
@@ -103,7 +103,7 @@
             error = true;
             fail.resolve(json);
         }
-        if (query != null){
+        if (query !== null){
             utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
             timeout = window.setTimeout(doFail.bind(this, {error:{code:503, message:'Service unavaliable'}}), 30000);
         }
@@ -126,32 +126,7 @@
             },
             pages: function(callback){
                 success.then(function(json){
-                    var pager = {},
-                        page = query.page || 0,
-                        found = json.found,
-                        pages = Math.ceil(found / (query.items || 20));
-                    
-                    pager.page = function(callback){
-                        callback(page);
-                        return this;
-                    };
-                    pager.pages = function(callback){
-                        callback(pages);
-                        return this;
-                    };
-                    pager.next = function(){
-                        query = utils.clone(query);
-                        query.page = page + 1;
-                        query = (query.page <= pages ? query : null);
-                        return hh.vacancies.search(query);
-                    };
-                    pager.previous = function(){
-                        query = utils.clone(query);
-                        query.page = page - 1;
-                        query = (query.page >= 0 ? query : null);
-                        return hh.vacancies.search(query);
-                    };
-                    callback(pager);
+                    callback(new hh._pager(json, query));
                 });
                 return this;
             },
@@ -178,9 +153,43 @@
                     if (error.code === 503){
                         callaback(error);
                     }
-                })
+                });
                 return this;
             }
+        };
+    };
+    
+    hh._pager = function(json, query){
+        var pager = {},
+            page = query.page || 0,
+            found = json.found,
+            pages = Math.ceil(found / (query.items || 20));
+        
+        this.page = function(callback){
+            callback(page);
+            return this;
+        };
+        this.pages = function(callback){
+            callback(pages);
+            return this;
+        };
+        this.isNext = function(){
+            return (query.page ? query.page : 0) < pages;
+        };
+        this.isPrevious = function(){
+            return query.page && query.page > 0;
+        };
+        this.next = function(){
+            query = utils.clone(query);
+            query.page = page + 1;
+            query = (query.page <= pages ? query : null);
+            return hh.vacancies.search(query);
+        };
+        this.previous = function(){
+            query = utils.clone(query);
+            query.page = page - 1;
+            query = (query.page >= 0 ? query : null);
+            return hh.vacancies.search(query);
         };
     };
 
