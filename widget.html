@@ -13,8 +13,8 @@
                 <a id="previous" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next" href="javascript:void(0)">еще 5 вакансий</a>
             </div>
         </div>
-        <div style="float:left; width:500px; margin-left:50px;">
-            <div id="employername"></div>
+        <div class="employer">
+            <div id="employername" class="employer__name"></div>
             <div id="employer"></div>
         </div>
         <script>
@@ -40,18 +40,16 @@
                                              (vacancy.salary.to
                                                  ? ' до ' + vacancy.salary.to
                                                  : '') + 
-                                             (vacancy.salary.from || vacancy.salary.to
+                                             ((vacancy.salary.from || vacancy.salary.to) && vacancy.salary.currency.name
                                                  ? ' ' + vacancy.salary.currency.name
                                                  : '') +
                                          '</span>'
                                        : '<span class="salary__notset">з/п не указанна</span>') +
                                 '</span>' +
-                                ' <a class="employer" href="' + (vacancy.employer.links.alternate ? vacancy.employer.links.alternate.href : '#') + '">' + vacancy.employer.name + '</a>'+
+                                ' <a class="vacancy__employer" href="' + (vacancy.employer.links.alternate ? vacancy.employer.links.alternate.href : '#') + '">' + vacancy.employer.name + '</a>'+
                             '</div>';
                 }
-                function vacancies(vacancies){
-                    document.getElementById('search').innerHTML = vacancies.join('');
-                }
+                
                 function pages(pages){
                     var next = document.getElementById('next');
                     next.style.visibility = pages.isNext() ? 'visible' : 'hidden';
@@ -64,13 +62,21 @@
                         pages.previous().done(result);
                     };
                 }
-                function result(response){
-                    response.iterate(vacancy, vacancies)
+                function search(response){
+                    response.iterate(vacancy, function vacancies(vacancies){document.getElementById('search').innerHTML = vacancies.join('');})
                             .pages(pages);
                 }
-                hh.vacancies.search({text:'javascript', items:5})
-                            .done(result)
+                
+                hh.vacancies.search({text:'javascript'})
+                            .done(search)
                             .fail(log);
+                
+                hh.vacancies.employer(1455)
+                            .iterate(vacancy, function(vacancies){document.getElementById('employer').innerHTML = vacancies.join('');})
+                            .fail(log);
+                
+                hh.employer(1455)
+                  .then(function(employer){document.getElementById('employername').innerHTML = employer.name;});
             })();
         </script>
     </body>

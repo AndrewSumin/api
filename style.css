@@ -9,6 +9,13 @@ a{
 .vacancy{
     margin-bottom:10px;
 }
+    .vacancy__employer{
+        color:#ccc;
+        text-decoration:none;
+    }
+        .vacancy__employer:hover{
+            text-decoration:underline;
+        }
 
 .pager{
     margin-top:15px;
@@ -23,10 +30,13 @@ a{
         color:#ccc;
     }
     
+    
 .employer{
-    color:#ccc;
-    text-decoration:none;
+    float:left;
+    width:500px;
+    margin-left:50px;
 }
-    .employer:hover{
-        text-decoration:underline;
+    .employer__name{
+        margin-bottom:15px;
+        font-size:15px;
     }

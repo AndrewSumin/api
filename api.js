@@ -198,7 +198,51 @@
         
         return result;
     };
-    
+
+    hh.vacancies.employer = function(id) {
+        var result = {},
+            defer = new hh._defer({
+                path: '/vacancy/employer/' + id + '/',
+                prepare: function(vacancies){
+                    return vacancies.map(hh._vacancy);
+                }
+            }, result);
+            
+        result.found = function(callback){
+            defer.success(function(json){callback(json.found);});
+            return this;
+        };
+        result.iterate = function(callback, resultCallback){
+            defer.success(function(vacancies){
+                var result = [];
+                for (var i = 0, l = vacancies.length; i < l; i++){
+                    result.push(callback(vacancies[i], i, vacancies));
+                }
+                if (resultCallback){
+                    resultCallback(result);
+                }   
+            });
+            return this;
+        };
+        result.done = function(callback){
+            callback(this);
+            return this;
+        };
+        
+        return result;
+    };
+
+    hh.employer = function(id) {
+        var result = {},
+            defer = new hh._defer({
+                path: '/employer/' + id + '/',
+                prepare: function(employer){
+                    return hh._employer(employer);
+                }
+            }, result);
+        return result;
+    };
+
     hh._vacancy = function(vacancy){
         if (!vacancy.description){
             vacancy.load = function(){
