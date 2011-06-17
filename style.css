@@ -5,6 +5,9 @@ body{
 a{
     color:#076CC7;
 }
+    a:hover{
+            color:#c00;
+    }
 
 .vacancy{
     margin-bottom:10px;
@@ -14,6 +17,7 @@ a{
         text-decoration:none;
     }
         .vacancy__employer:hover{
+            color:#ccc;
             text-decoration:underline;
         }
 

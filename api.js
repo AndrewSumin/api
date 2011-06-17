@@ -70,6 +70,10 @@
                 while(a.length) a.shift()(b);
                 a=0;
             },
+            reject: function(){
+                this.then = function(){};
+                a = [];
+            },
             then: function(c){
                 a ? a.push(c) : c(b);
             }
@@ -125,16 +129,15 @@
         },
         _init: function(obj){
             this._obj = obj;
-            this._obj.check = this._obj.check || function(json){return json;};
+            this._obj.check = this._obj.check || function(json){return json && !json.error;};
             this._obj.prepare = this._obj.prepare || function(json){return json;};
             this._success = defer();
             this._fail = defer();
-            this._timeout = window.setTimeout(this._doFail.bind(this, {error:{code:503, message:'Service unavaliable'}}), 30000);
+            this._timeout = window.setTimeout(this._doFail.bind(this, {error:{code:504, message:'Gateway Timeout'}}), 30000);
             utils.createScript({src: utils.createSrc(this._obj.path, this._obj.params, this._callback())});
         },
         _callback: function(){
             return utils.createCallback(function(json){
-                json = this._obj.prepare(json);
                 this._doSuccess(json);
             }.bind(this));
         },
@@ -143,12 +146,14 @@
                 window.clearTimeout(this._timeout);
             }
             if (!this._obj.check(json)){
-                this._doFail({error:{code:500, message:'Error, try later'}});
+                this._doFail({error:{code:500, message:'Internal Server Error'}});
                 return;
             }
-            this._success.resolve(json);
+            this._fail.reject();
+            this._success.resolve(this._obj.prepare(json));
         },
         _doFail: function(json){
+            this._success.reject();
             this._fail.resolve(json);
         }
     };

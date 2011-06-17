@@ -23,10 +23,10 @@
                     console.log(json);
                 }
                 function vacancy(vacancy){
-                    vacancy.load().then(log)
-                                  .fail(log)
-                                  .employer.load().then(log)
-                                                  .fail(log);
+//                    vacancy.load().then(log)
+//                                  .fail(log)
+//                                  .employer.load().then(log)
+//                                                  .fail(log);
                            
                     return '<div class="vacancy">' + 
                                '<a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a>' + 
@@ -69,6 +69,7 @@
                 
                 hh.vacancies.search({text:'javascript'})
                             .done(search)
+                            .then(log)
                             .fail(log);
                 
                 hh.vacancies.employer(1455)
@@ -76,7 +77,10 @@
                             .fail(log);
                 
                 hh.employer(1455)
-                  .then(function(employer){document.getElementById('employername').innerHTML = employer.name;});
+                  .then(function(employer){
+                      var html = '<a href="' + (employer.links.alternate ? employer.links.alternate.href : '#') + '">' + employer.name + '</a>'
+                      document.getElementById('employername').innerHTML = html;
+                  });
             })();
         </script>
     </body>
