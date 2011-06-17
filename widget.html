@@ -62,13 +62,13 @@
                         pages.previous().done(result);
                     };
                 }
-                function search(response){
-                    response.iterate(vacancy, function vacancies(vacancies){document.getElementById('search').innerHTML = vacancies.join('');})
-                            .pages(pages);
+                function search(search){
+                    search.iterate(vacancy, function vacancies(vacancies){document.getElementById('search').innerHTML = vacancies.join('');})
+                          .pages(pages);
                 }
                 
                 hh.vacancies.search({text:'javascript'})
-                            .done(search)
+                            .self(search)
                             .then(log)
                             .fail(log);
                 

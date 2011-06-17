@@ -98,6 +98,10 @@
             if (!promise){
                 return;
             }
+            promise.self = function(callback){
+                callback(this);
+                return this;
+            };
             promise.then = function(callback){
                 defer.success(function(json){
                     callback(json);
@@ -196,11 +200,6 @@
             });
             return this;
         };
-        result.done = function(callback){
-            callback(this);
-            return this;
-        };
-        
         return result;
     };
 
