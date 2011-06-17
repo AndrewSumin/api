@@ -62,8 +62,8 @@
         }
     };
     
-    var defer = function(a,b){
-        a=[];
+    var defer = function(){
+        var a=[], b;
         return{
             resolve: function(c){
                 b=c;
@@ -77,86 +77,162 @@
     };
         
     var hh = {};
-
-    hh.vacancies = {};
-
-    hh.vacancies.search = function(query) {
-        var success = defer(),
-            fail = defer(),
-            error = false,
-            timeout;
-        var callbackName = utils.createCallback(function(json){
-            doSuccess(json);
-        });
-        function doSuccess(json){
-            if (timeout){
-                window.clearTimeout(timeout);
+    
+    hh._defer = function(obj, promise){
+        this._init(obj);
+        this.promise(promise, this);
+    };
+    
+    hh._defer.prototype = {
+        success: function(callback){
+            this._success.then(callback);
+        },
+        fail: function(callback){
+            this._fail.then(callback);
+        },
+        promise: function(promise, defer){
+            if (!promise){
+                return;
             }
-            if (!json.vacancies){
-                doFail({error:{code:500, message:'Error, try later'}});
-            }
-            if (!error){
-                success.resolve(json);
-            }
-        }
-        function doFail(json){
-            error = true;
-            fail.resolve(json);
-        }
-        utils.createScript({src: utils.createSrc('/vacancy/search/', query, callbackName)});
-        timeout = window.setTimeout(doFail.bind(this, {error:{code:503, message:'Service unavaliable'}}), 30000);
-        return {
-            found: function(callback){
-                success.then(function(json){callback(json.found);});
-                return this;
-            },
-            iterate: function(callback, resultCallback){
-                success.then(function(json){
-                    var result = [];
-                    for (var i = 0, l = json.vacancies.length; i < l; i++){
-                        result.push(callback(json.vacancies[i], i, json.vacancies));
-                    }
-                    if (resultCallback){
-                        resultCallback(result);
-                    }   
+            promise.then = function(callback){
+                defer.success(function(json){
+                    callback(json);
                 });
                 return this;
-            },
-            pages: function(callback){
-                success.then(function(json){
-                    callback(new hh._pager(json, query));
-                });
-                return this;
-            },
-            done: function(callback){
-                callback(this);
-                return this;
-            },
-            fail: function(callback){
-                fail.then(function(error){
+            };
+            promise.fail = function(callback){
+                defer.fail(function(error){
                     callback(error);
                 });
                 return this;
-            },
-            error: function(callback){
-                fail.then(function(error){
+            };
+            promise.error = function(callback){
+                defer.fail(function(error){
                     if (error.code === 500){
                         callback(error);
                     }
                 });
                 return this;
-            },
-            timeout: function(callback){
-                fail.then(function(error){
+            };
+            promise.timeout = function(callback){
+                defer.fail(function(error){
                     if (error.code === 503){
                         callaback(error);
                     }
                 });
                 return this;
+            };
+        },
+        _init: function(obj){
+            this._obj = obj;
+            this._obj.check = this._obj.check || function(json){return json;};
+            this._obj.prepare = this._obj.prepare || function(json){return json;};
+            this._success = defer();
+            this._fail = defer();
+            this._timeout = window.setTimeout(this._doFail.bind(this, {error:{code:503, message:'Service unavaliable'}}), 30000);
+            utils.createScript({src: utils.createSrc(this._obj.path, this._obj.params, this._callback())});
+        },
+        _callback: function(){
+            return utils.createCallback(function(json){
+                json = this._obj.prepare(json);
+                this._doSuccess(json);
+            }.bind(this));
+        },
+        _doSuccess: function(json){
+            if (this._timeout){
+                window.clearTimeout(this._timeout);
             }
+            if (!this._obj.check(json)){
+                this._doFail({error:{code:500, message:'Error, try later'}});
+                return;
+            }
+            this._success.resolve(json);
+        },
+        _doFail: function(json){
+            this._fail.resolve(json);
+        }
+    };
+
+    hh.vacancies = {};
+
+    hh.vacancies.search = function(query) {
+        var result = {},
+            defer = new hh._defer({
+                path: '/vacancy/search/',
+                params: query,
+                check: function(json){
+                    return json.vacancies;
+                },
+                prepare: function(json){
+                    json.vacancies = json.vacancies.map(hh._vacancy);
+                    return json;
+                }
+            }, result);
+            
+        result.found = function(callback){
+            defer.success(function(json){callback(json.found);});
+            return this;
         };
+        result.iterate = function(callback, resultCallback){
+            defer.success(function(json){
+                var result = [];
+                for (var i = 0, l = json.vacancies.length; i < l; i++){
+                    result.push(callback(json.vacancies[i], i, json.vacancies));
+                }
+                if (resultCallback){
+                    resultCallback(result);
+                }   
+            });
+            return this;
+        };
+        result.pages = function(callback){
+            defer.success(function(json){
+                callback(new hh._pager(json, query));
+            });
+            return this;
+        };
+        result.done = function(callback){
+            callback(this);
+            return this;
+        };
+        
+        return result;
     };
     
+    hh._vacancy = function(vacancy){
+        if (!vacancy.description){
+            vacancy.load = function(){
+                var defer = new hh._defer({
+                    path: '/vacancy/' + vacancy.id + '/',
+                    prepare: function(json){
+                        return hh._vacancy(json);
+                    }
+                }, this);
+                return this;
+            };
+        }
+        
+        vacancy.employer = hh._employer(vacancy.employer);
+        
+        return vacancy;
+    };
+
+    hh._employer = function(employer){
+        if (!employer.description){
+            employer.load = function(){
+                var defer = new hh._defer({
+                    path: '/employer/' + employer.id + '/',
+                    prepare: function(json){
+                        return hh._employer(json);
+                    }
+                }, this);
+                return this;
+            };
+        }
+        return employer;
+    };
+
+
     hh._pager = function(json, query){
         var page = query.page || 0,
             found = json.found,

@@ -19,7 +19,15 @@
         </div>
         <script>
             (function(){
+                function log(json){
+                    console.log(json);
+                }
                 function vacancy(vacancy){
+                    vacancy.load().then(log)
+                                  .fail(log)
+                                  .employer.load().then(log)
+                                                  .fail(log);
+                           
                     return '<div class="vacancy">' + 
                                '<a href="' + vacancy.links.alternate.href + '" class="vacancy">' + vacancy.name + '</a>' + 
                                '<br/>' + 
@@ -62,7 +70,7 @@
                 }
                 hh.vacancies.search({text:'javascript', items:5})
                             .done(result)
-                            .fail(console.log);
+                            .fail(log);
             })();
         </script>
     </body>
