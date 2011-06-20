@@ -212,10 +212,6 @@
                 }
             }, result);
             
-        result.found = function(callback){
-            defer.success(function(json){callback(json.found);});
-            return this;
-        };
         result.iterate = function(callback, resultCallback){
             defer.success(function(vacancies){
                 var result = [];
@@ -228,11 +224,6 @@
             });
             return this;
         };
-        result.done = function(callback){
-            callback(this);
-            return this;
-        };
-        
         return result;
     };
 
@@ -286,29 +277,26 @@
             found = json.found,
             pages = Math.ceil(found / (query.items || 20));
         
-        this.page = function(callback){
-            callback(page);
-            return this;
-        };
-        this.pages = function(callback){
-            callback(pages);
-            return this;
+        this.page = function(){
+            return page;
         };
         this.isNext = function(){
-            return (query.page ? query.page : 0) < pages;
+            return ((query.page ? query.page : 0) < pages);
         };
-        this.isPrevious = function(){
-            return query.page && query.page > 0;
+        this.isPrevious = function(callback){
+            return (query.page && query.page > 0);
         };
-        this.next = function(){
+        this.next = function(callback){
             query = utils.clone(query);
             query.page = Math.min(page + 1, pages);
-            return hh.vacancies.search(query);
+            callback(hh.vacancies.search(query));
+            return this;
         };
-        this.previous = function(){
+        this.previous = function(callback){
             query = utils.clone(query);
             query.page = Math.max(0, page - 1);
-            return hh.vacancies.search(query);
+            callback(hh.vacancies.search(query));
+            return this;
         };
     };
 
