@@ -42,17 +42,17 @@
             }
             return result.join('&');
         },
-        clone: function(o) {
+        extend: function(o, c) {
             if(!o || 'object' !== typeof o)  {
                 return o;
             }
-            varc = 'function' === typeof o.pop ? [] : {};
-            var p, v, c = {};
+            var p, v;
+            c = c || {};
             for(p in o) {
                 if(o.hasOwnProperty(p)) {
                     v = o[p];
                     if(v && 'object' === typeof v) {
-                        c[p] = this.clone(v);
+                        c[p] = this.extend(v);
                     } else {
                         c[p] = v;
                     }
@@ -237,6 +237,17 @@
             }, result);
         return result;
     };
+    
+    hh.vacancy = function(id) {
+        var result = {},
+            defer = new hh._defer({
+                path: '/vacancy/' + id + '/',
+                prepare: function(vacancy){
+                    return hh._vacancy(vacancy);
+                }
+            }, result);
+        return result;
+    };
 
     hh._vacancy = function(vacancy){
         if (!vacancy.description){
@@ -283,23 +294,30 @@
         this.isNext = function(){
             return ((query.page ? query.page : 0) < pages);
         };
-        this.isPrevious = function(callback){
+        this.isPrevious = function(){
             return (query.page && query.page > 0);
         };
         this.next = function(callback){
-            query = utils.clone(query);
+            query = utils.extend(query);
             query.page = Math.min(page + 1, pages);
             callback(hh.vacancies.search(query));
             return this;
         };
         this.previous = function(callback){
-            query = utils.clone(query);
+            query = utils.extend(query);
             query.page = Math.max(0, page - 1);
             callback(hh.vacancies.search(query));
             return this;
         };
     };
-
-    window[name] = hh;
+    
+    hh.onload = function(callback){
+        callback(hh);
+    };
+    
+    window[name] = utils.extend(hh, window[name]);
+    window[name]._callbacks.forEach(function(callback){
+        callback(hh);
+    });
 
 })('hh');

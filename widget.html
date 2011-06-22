@@ -7,10 +7,10 @@
         <script type="text/javascript" src="api.js"></script>
     </head>
     <body>
-        <div style="float:left; width:500px;">
-            <div id="search"></div>
+        <div class="search">
+            <div id="result"></div>
             <div class="pager">
-                <a id="previous" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next" href="javascript:void(0)">еще 20 вакансий</a>
+                <a id="previous" style="visibility:hidden" href="javascript:void(0)">назад</a>&#160;&#160;<a id="next"  style="visibility:hidden" href="javascript:void(0)">еще 20 вакансий</a>
             </div>
         </div>
         <div class="employer">
@@ -48,8 +48,8 @@
                 }
                 
                 function pages(pages){
-                    document.getElementById('next').style.visibility = pages.isNext ? 'visible' : 'hidden'
-                    document.getElementById('previous').style.visibility = pages.isPrevious ? 'visible' : 'hidden';
+                    document.getElementById('next').style.visibility = pages.isNext() ? 'visible' : 'hidden'
+                    document.getElementById('previous').style.visibility = pages.isPrevious() ? 'visible' : 'hidden';
 
                     next.onclick = function(){
                         pages.next(search);
@@ -59,7 +59,7 @@
                     };
                 }
                 function search(search){
-                    search.iterate(vacancy, function vacancies(vacancies){document.getElementById('search').innerHTML = vacancies.join('');})
+                    search.iterate(vacancy, function vacancies(vacancies){document.getElementById('result').innerHTML = vacancies.join('');})
                           .pages(pages);
                 }
                 

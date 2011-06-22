@@ -1,46 +1,31 @@
-body{
-    font-family:Tahoma, Arial;
+hh{
     font-size:14px;
+    font-family:Tahoma, Arial, serif;
+    display:block;
 }
-a{
+
+.hh-link{
     color:#076CC7;
+    text-decoration:underline;
+    cursor:pointer;
 }
-    a:hover{
-            color:#c00;
-    }
-
-.vacancy{
-    margin-bottom:10px;
-}
-    .vacancy__employer{
-        color:#ccc;
-        text-decoration:none;
-    }
-        .vacancy__employer:hover{
-            color:#ccc;
-            text-decoration:underline;
-        }
-
-.pager{
-    margin-top:15px;
-}
-
-.salary{
-}
-    .salary__set{
-        color:#090;
-    }
-    .salary__notset{
-        color:#ccc;
+    .hh-link:hover{
+        color:#c00;
     }
     
-    
-.employer{
-    float:left;
-    width:500px;
-    margin-left:50px;
+.hh-vacancy{
+    display:block;
+    margin-bottom:5px;
 }
-    .employer__name{
-        margin-bottom:15px;
-        font-size:15px;
+    .hh-vacancy__name{
+        font-size:16px;
     }
+    
+.hh-salary{
+    color:#444;
+    display:block;
+}
+    .hh-salary_notset{
+        color:#aaa;
+    }
+
