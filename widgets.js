@@ -2,7 +2,9 @@
     if (window.hh){
         return;
     }
-    window.hh = {_callbacks: [], onload:function(callback){this._callbacks.push(callback);}};
+    window.hh = {_callbacks:[], onload:function(callback){this._callbacks.push(callback);}};
+    
+    var hh = window.hh;
     
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
@@ -16,7 +18,7 @@
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('charset', 'utf-8');
     link.setAttribute('href', 'style.css');
-    var head = document.getElementsByTagName('head').item(0);
+    head = document.getElementsByTagName('head').item(0);
     head.insertBefore(link, head.firstChild);
 
 
@@ -36,7 +38,7 @@
         new Widget(element, new Function ('return ' + element.getAttribute('data-config'))());
     }
 
-    window.hh.onload(function(){
+    hh.onload(function(){
         if (document.readyState === 'complete'){
             find();
         } else {
@@ -64,8 +66,16 @@
             if (this.config.type == 'vacancies' && this.config.source == 'employer'){
                 this.vacancies_employer(this.config.query);
             }
+            
+            this.element.addEventListener('click', function(event){
+                if (event.target.getAttribute('href')){
+                    window.location.assign(event.target.getAttribute('href'));
+                }
+            }, false);
+
         },
         draw_vacancy: function(vacancy){
+            console.log(vacancy.name, vacancy);
             return '<hhelement class="hh-vacancy">' + 
                        '<hhelement class="hh-link hh-vacancy__name" title="' + vacancy.links.alternate.href + '" href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</hhelement>' + 
                        (vacancy.salary
@@ -81,6 +91,7 @@
         },
         draw_vacancies: function(vacancies){
             this.element.innerHTML = vacancies.join('');
+            
         },
         vacancies_employer: function(id){
             hh.vacancies.employer(id)
