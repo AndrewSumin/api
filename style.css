@@ -30,3 +30,22 @@ hh{
         color:#aaa;
     }
 
+
+.hh-black{
+    background:#000;
+}
+
+.hh-black .hh-link{
+    color:#FFF;
+}
+    .hh-black .hh-link:hover{
+        color:#c00;
+    }
+    
+.hh-black .hh-salary{
+    color:#DDD;
+    display:block;
+}
+    .hh-black .hh-salary_notset{
+        color:#333;
+    }
