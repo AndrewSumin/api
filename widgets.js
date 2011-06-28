@@ -61,7 +61,7 @@
             
             this.element.style.width = this.config.style ? this.config.style.width || 'auto' : 'auto';
             this.element.style.height = this.config.style ? this.config.style.height || 'auto' : 'auto';
-            this.element.style.overflowY = 'auto';
+            //this.element.style.overflowY = 'auto';
             this.element.className = 'hh-' + (this.config.scheme || 'light');
             
             if (this.config.type == 'vacancies' && this.config.source == 'employer'){
@@ -78,7 +78,7 @@
         draw_vacancy: function(vacancy){
             console.log(vacancy.name, vacancy);
             return '<hhelement class="hh-vacancy">' + 
-                       '<hhelement class="hh-link hh-vacancy__name" title="' + vacancy.links.alternate.href + '" href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</hhelement>' + 
+                       '<hhelement class="hh-vacancy__name" title="' + vacancy.links.alternate.href + '" href="' + vacancy.links.alternate.href + '">' + vacancy.name + '</hhelement>' + 
                        (vacancy.salary
                            ? '<hhelement class="hh-salary">' + 
                                  (vacancy.salary.from ? 'от ' + vacancy.salary.from : '') +

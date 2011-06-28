@@ -3,6 +3,7 @@ hh{
     font-family:Tahoma, Arial, serif;
     display:block;
     background:#fff;
+    overflow:hidden;
 }
 
 .hh-link{
@@ -16,10 +17,15 @@ hh{
     
 .hh-vacancy{
     display:block;
-    margin-bottom:5px;
+    padding-top:3px;
+    padding-bottom:3px;
+    background-image: -webkit-linear-gradient(#FAFAFA, #EEE)
 }
     .hh-vacancy__name{
         font-size:16px;
+        white-space:nowrap;
+        widht:100%;
+        overflow:hidden;
     }
     
 .hh-salary{
