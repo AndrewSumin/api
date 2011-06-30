@@ -3,11 +3,8 @@
         return;
     }
     window.hh = {_callbacks:[], onload:function(callback){this._callbacks.push(callback);}};
-<<<<<<< HEAD
-    
+
     var hh = window.hh;
-=======
->>>>>>> 900cfae30dd33904ad231eb82c78a5be00559341
     
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
